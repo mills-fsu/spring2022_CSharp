@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs
+/ListManagement/ListManagement/bin/Debug/net6.0
+/ListManagement/ListManagement/obj
+/ListManagement/.vs/ListManagement
