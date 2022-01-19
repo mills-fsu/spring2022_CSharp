@@ -8,15 +8,16 @@ namespace ListManagement // Note: actual namespace depends on the project name.
     {
         static void Main(string[] args)
         {
-            var todos = new List<ToDo>();
+            var items = new List<Item>();
+            //List<ToDo> todos;
             Console.WriteLine("Welcome to the List Management App");
 
-            var nextTodo = new ToDo();
+            ToDo nextTodo = new ToDo();
             PrintMenu();
 
             int input = -1;
             if(int.TryParse(Console.ReadLine(),out input)) {
-                while (input != 3) //==
+                while (input != 7) //==
                 {
                     nextTodo = new ToDo();
                     if (input == 1)
@@ -27,7 +28,7 @@ namespace ListManagement // Note: actual namespace depends on the project name.
                         nextTodo.Name = Console.ReadLine();
 
 
-                        //todos.Add(nextTodo);
+                        items.Add(nextTodo);
 
                         //nextTodo.Deadline = DateTime.TryParse(Console.ReadLine());
                     }
@@ -53,7 +54,7 @@ namespace ListManagement // Note: actual namespace depends on the project name.
                     } else if (input ==6)
                     {
                         //R - Read / List all tasks
-                        foreach(var todo in todos)
+                        foreach(var todo in items)
                         {
                             Console.WriteLine(todo.ToString());
                         }
@@ -76,7 +77,7 @@ namespace ListManagement // Note: actual namespace depends on the project name.
             }
             
 
-            foreach(var item in stringList)
+            foreach(var item in items)
             {
                 Console.WriteLine(item);
             }

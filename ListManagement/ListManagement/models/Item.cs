@@ -1,21 +1,22 @@
 ﻿using ListManagement.interfaces;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ListManagement.models
 {
-    public class ToDo: Item
+    public class Item: IItem
     {
-        public DateTime Deadline { get; set; }
-        public bool IsCompleted { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
 
+        internal string? test;
         public override string ToString()
         {
-            return $"{Name} {Description} Completed: {IsCompleted}";
+            Name = null;
+            return $"{Name} {Description}";
         }
     }
 }
