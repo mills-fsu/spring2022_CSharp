@@ -9,7 +9,18 @@ namespace ListManagement.models
 {
     public class Item: IItem
     {
-        public string? Name { get; set; }
+        private string? _name;
+        public string? Name { 
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
+        
+        }
         public string? Description { get; set; }
 
         internal string? test;
