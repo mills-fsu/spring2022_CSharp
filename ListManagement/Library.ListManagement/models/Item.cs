@@ -22,8 +22,6 @@ namespace ListManagement.models
         
         }
         public string? Description { get; set; }
-
-        internal string? test;
         public override string ToString()
         {
             Name = null;

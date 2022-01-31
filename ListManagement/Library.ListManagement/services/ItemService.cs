@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ListManagement
+namespace ListManagement.services
 {
     public class ItemService
     {
@@ -44,6 +44,11 @@ namespace ListManagement
         public void Remove (Item i)
         {
             items.Remove(i);
+        }
+
+        public void Save()
+        {
+            var persistencePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         }
     }
 }
