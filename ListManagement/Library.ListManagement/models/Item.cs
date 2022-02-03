@@ -24,7 +24,6 @@ namespace ListManagement.models
         public string? Description { get; set; }
         public override string ToString()
         {
-            Name = null;
             return $"{Name} {Description}";
         }
     }

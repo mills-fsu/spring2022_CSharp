@@ -1,4 +1,5 @@
-﻿using ListManagement.models;
+﻿using Library.ListManagement.helpers;
+using ListManagement.models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,21 @@ namespace ListManagement.services
     public class ItemService
     {
         private List<Item> items;
+        private ListNavigator<Item> listNav;
 
         static private ItemService instance;
 
         public List<Item> Items {
             get {
                 return items;
+            }
+        }
+
+        public IEnumerable<Item> IncompleteItems
+        {
+            get
+            {
+                return Items.Where(i => !((i as ToDo)?.IsCompleted ?? true));
             }
         }
 
@@ -34,6 +44,7 @@ namespace ListManagement.services
         private ItemService()
         {
             items = new List<Item>();
+            listNav = new ListNavigator<Item>(items, 2);
         }
 
         public void Add(Item i)
@@ -49,6 +60,29 @@ namespace ListManagement.services
         public void Save()
         {
             var persistencePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        }
+
+        public Dictionary<object, Item> GetPage()
+        {
+            var page = listNav.GetCurrentPage();
+            if(listNav.HasNextPage)
+            {
+                page.Add("N", new Item {Name = "Next" });
+            } if(listNav.HasPreviousPage)
+            {
+                page.Add("P", new Item { Name = "Previous" });
+            }
+            return page;
+        }
+
+        public Dictionary<object, Item> NextPage()
+        {
+            return listNav.GoForward();
+        }
+
+        public Dictionary<object, Item> PreviousPage()
+        {
+            return listNav.GoBackward();
         }
     }
 }

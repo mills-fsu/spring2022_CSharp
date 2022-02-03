@@ -1,4 +1,5 @@
-﻿using ListManagement.models;
+﻿using Library.ListManagement.helpers;
+using ListManagement.models;
 using ListManagement.services;
 using System2 = System;
 
@@ -9,6 +10,7 @@ namespace ListManagement // Note: actual namespace depends on the project name.
         static void Main(string[] args)
         {
             var itemService = ItemService.Current;
+            //var listNavigator = new ListNavigator<Item>(itemService.Items, 2);
             Console.WriteLine("Welcome to the List Management App");
 
             PrintMenu();
@@ -90,7 +92,27 @@ namespace ListManagement // Note: actual namespace depends on the project name.
                     } else if (input ==6)
                     {
                         //R - Read / List all tasks
-                        itemService.Items.ForEach(Console.WriteLine);
+                        //itemService.Items.ForEach(Console.WriteLine);
+                        var userSelection = string.Empty;
+                        while(userSelection != "E")
+                        {
+                            foreach (var item in itemService.GetPage())
+                            {
+                                Console.WriteLine(item);
+                            }
+                            userSelection = Console.ReadLine();
+
+                            if (userSelection == "N")
+                            {
+                                itemService.NextPage();
+                            }
+                            else if (userSelection == "P")
+                            {
+                                itemService.PreviousPage();
+                            }
+                        }
+                        
+
                     } else if (input == 7)
                     {
 
