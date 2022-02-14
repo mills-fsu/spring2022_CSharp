@@ -38,8 +38,12 @@ namespace ListManagement // Note: actual namespace depends on the project name.
 
                         if(int.TryParse(Console.ReadLine(), out int selection))
                         {
-                            var selectedItem = itemService.Items[selection - 1];
-                            itemService.Remove(selectedItem);
+                            var selectedItem = itemService.Items.FirstOrDefault(i => i.Id == selection);
+                            if(selectedItem != null)
+                            {
+                                itemService.Remove(selectedItem);
+                            }
+
                         } else
                         {
                             Console.WriteLine("Sorry, I can't find that item!");
@@ -69,7 +73,7 @@ namespace ListManagement // Note: actual namespace depends on the project name.
                         Console.WriteLine("Which item should I complete?");
                         if (int.TryParse(Console.ReadLine(), out int selection))
                         {
-                            var selectedItem = itemService.Items[selection] as ToDo;
+                            var selectedItem = itemService.Items[selection-1] as ToDo;
                             
                             if(selectedItem != null)
                             {
@@ -86,15 +90,31 @@ namespace ListManagement // Note: actual namespace depends on the project name.
                         //R - Read / List uncompleted tasks
 
                         //use LINQ
-                        itemService.Items
-                            .Where(i => !((i as ToDo)?.IsCompleted ?? true))
-                            .ToList()
-                            .ForEach(Console.WriteLine);
+                        itemService.ShowComplete = false;
+                        var userSelection = string.Empty;
+                        while (userSelection != "E")
+                        {
+                            foreach (var item in itemService.GetPage())
+                            {
+                                Console.WriteLine(item);
+                            }
+                            userSelection = Console.ReadLine();
+
+                            if (userSelection == "N")
+                            {
+                                itemService.NextPage();
+                            }
+                            else if (userSelection == "P")
+                            {
+                                itemService.PreviousPage();
+                            }
+                        }
 
                     } else if (input ==6)
                     {
                         //R - Read / List all tasks
                         //itemService.Items.ForEach(Console.WriteLine);
+                        itemService.ShowComplete = true;
                         var userSelection = string.Empty;
                         while(userSelection != "E")
                         {

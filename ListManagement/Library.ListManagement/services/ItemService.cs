@@ -14,22 +14,25 @@ namespace ListManagement.services
         private List<Item> items;
         private ListNavigator<Item> listNav;
         private string persistencePath;
-        private JsonSerializerSettings serializerSettings 
-            = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All};
+        private JsonSerializerSettings serializerSettings
+            = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
 
         static private ItemService instance;
 
+        public bool ShowComplete { get; set; }
         public List<Item> Items {
             get {
                 return items;
             }
         }
 
-        public IEnumerable<Item> IncompleteItems
+        public IEnumerable<Item> FilteredItems
         {
             get
             {
-                return Items.Where(i => !((i as ToDo)?.IsCompleted ?? true));
+                return Items.Where(i =>
+                (!ShowComplete && !((i as ToDo)?.IsCompleted ?? true)) //incomplete only
+                || ShowComplete);
             }
         }
 
@@ -48,10 +51,9 @@ namespace ListManagement.services
         private ItemService()
         {
             items = new List<Item>();
-            listNav = new ListNavigator<Item>(items, 2);
 
             persistencePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            if(File.Exists(persistencePath))
+            if (File.Exists(persistencePath))
             {
                 try
                 {
@@ -60,28 +62,33 @@ namespace ListManagement.services
                     {
                         items = JsonConvert.DeserializeObject<List<Item>>(state, serializerSettings) ?? new List<Item>();
                     }
-                } catch(Exception e)
+                } catch (Exception e)
                 {
                     File.Delete(persistencePath);
                     items = new List<Item>();
                 }
-
             }
+
+            listNav = new ListNavigator<Item>(FilteredItems, 2);
         }
 
         public void Add(Item i)
         {
+            if (i.Id <= 0)
+            {
+                i.Id = nextId;
+            }
             items.Add(i);
         }
 
-        public void Remove (Item i)
+        public void Remove(Item i)
         {
             items.Remove(i);
         }
 
         public void Save()
         {
-            
+
             var listJson = JsonConvert.SerializeObject(Items, serializerSettings);
             if (File.Exists(persistencePath))
             {
@@ -93,10 +100,10 @@ namespace ListManagement.services
         public Dictionary<object, Item> GetPage()
         {
             var page = listNav.GetCurrentPage();
-            if(listNav.HasNextPage)
+            if (listNav.HasNextPage)
             {
-                page.Add("N", new Item {Name = "Next" });
-            } if(listNav.HasPreviousPage)
+                page.Add("N", new Item { Name = "Next" });
+            } if (listNav.HasPreviousPage)
             {
                 page.Add("P", new Item { Name = "Previous" });
             }
@@ -111,6 +118,13 @@ namespace ListManagement.services
         public Dictionary<object, Item> PreviousPage()
         {
             return listNav.GoBackward();
+        }
+
+        private int nextId {
+            get
+            {
+                return Items.Select(i => i.Id).Max() + 1;
+            }
         }
     }
 }
