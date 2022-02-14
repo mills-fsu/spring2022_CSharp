@@ -1,5 +1,6 @@
 ﻿using Library.ListManagement.helpers;
 using ListManagement.models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,9 @@ namespace ListManagement.services
     {
         private List<Item> items;
         private ListNavigator<Item> listNav;
+        private string persistencePath;
+        private JsonSerializerSettings serializerSettings 
+            = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All};
 
         static private ItemService instance;
 
@@ -45,6 +49,24 @@ namespace ListManagement.services
         {
             items = new List<Item>();
             listNav = new ListNavigator<Item>(items, 2);
+
+            persistencePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            if(File.Exists(persistencePath))
+            {
+                try
+                {
+                    var state = File.ReadAllText(persistencePath);
+                    if (state != null)
+                    {
+                        items = JsonConvert.DeserializeObject<List<Item>>(state, serializerSettings) ?? new List<Item>();
+                    }
+                } catch(Exception e)
+                {
+                    File.Delete(persistencePath);
+                    items = new List<Item>();
+                }
+
+            }
         }
 
         public void Add(Item i)
@@ -59,7 +81,13 @@ namespace ListManagement.services
 
         public void Save()
         {
-            var persistencePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            
+            var listJson = JsonConvert.SerializeObject(Items, serializerSettings);
+            if (File.Exists(persistencePath))
+            {
+                File.Delete(persistencePath);
+            }
+            File.WriteAllText(persistencePath, listJson);
         }
 
         public Dictionary<object, Item> GetPage()

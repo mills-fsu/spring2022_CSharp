@@ -8,3 +8,8 @@
 /ListManagement/.vs/ListManagement
 /ListManagement/Library.ListManagement/bin/Debug/net6.0
 /ListManagement/Library.ListManagement/obj
+/ListManagement/Mobile.ListManagement/Mobile.ListManagement/obj
+/ListManagement/Mobile.ListManagement/Mobile.ListManagement.Android/obj
+/ListManagement/Mobile.ListManagement/Mobile.ListManagement.iOS/obj
+/ListManagement/UWPListManagement/bin/x64/Debug
+/ListManagement/UWPListManagement/obj

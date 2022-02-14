@@ -1,6 +1,7 @@
 ﻿using Library.ListManagement.helpers;
 using ListManagement.models;
 using ListManagement.services;
+using Newtonsoft.Json;
 using System2 = System;
 
 namespace ListManagement // Note: actual namespace depends on the project name.
@@ -9,6 +10,7 @@ namespace ListManagement // Note: actual namespace depends on the project name.
     {
         static void Main(string[] args)
         {
+            var persistencePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\SaveData.json";
             var itemService = ItemService.Current;
             //var listNavigator = new ListNavigator<Item>(itemService.Items, 2);
             Console.WriteLine("Welcome to the List Management App");
@@ -113,7 +115,10 @@ namespace ListManagement // Note: actual namespace depends on the project name.
                         }
                         
 
-                    } else if (input == 7)
+                    } else if (input ==7)
+                    {
+                        itemService.Save();
+                    } else if (input == 8)
                     {
 
                     }
@@ -145,7 +150,8 @@ namespace ListManagement // Note: actual namespace depends on the project name.
             Console.WriteLine("4. Complete Item");
             Console.WriteLine("5. List Outstanding");
             Console.WriteLine("6. List All");
-            Console.WriteLine("7. Exit");
+            Console.WriteLine("7. Save");
+            Console.WriteLine("8. Exit");
         }
 
         public static void FillProperties(ToDo todo)
