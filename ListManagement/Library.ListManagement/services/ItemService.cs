@@ -26,13 +26,26 @@ namespace ListManagement.services
             }
         }
 
+        public string Query { get; set; }
+
         public IEnumerable<Item> FilteredItems
         {
             get
             {
-                return Items.Where(i =>
+                var incompleteItems = Items.Where(i =>
                 (!ShowComplete && !((i as ToDo)?.IsCompleted ?? true)) //incomplete only
                 || ShowComplete);
+                //show complete (all)
+
+                var searchResults = incompleteItems.Where(i => string.IsNullOrWhiteSpace(Query)
+                //there is no query
+                || (i?.Name?.ToUpper()?.Contains(Query.ToUpper()) ?? false)   
+                //i is any item and its name contains the query
+                || (i?.Description?.ToUpper()?.Contains(Query.ToUpper()) ?? false)                                        
+                //or i is any item and its description contains the query
+                ||((i as Appointment)?.Attendees?.Select(t => t.ToUpper())?.Contains(Query.ToUpper()) ?? false));         
+                //or i is an appointment and has the query in the attendees list
+                return searchResults;
             }
         }
 
@@ -52,7 +65,7 @@ namespace ListManagement.services
         {
             items = new List<Item>();
 
-            persistencePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            persistencePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\SaveData.json";
             if (File.Exists(persistencePath))
             {
                 try
