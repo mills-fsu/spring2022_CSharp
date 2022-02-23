@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UWPListManagement.Dialogs;
+using UWPListManagement.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -25,6 +27,27 @@ namespace UWPListManagement
         public MainPage()
         {
             this.InitializeComponent();
+            DataContext = new MainViewModel();
+        }
+
+        private async void AddToDoClick(object sender, RoutedEventArgs e)
+        {
+            (DataContext as MainViewModel).Add(
+                new ListManagement.models.ToDo { Name = "Test", Description = "Test Description" }
+                );
+
+            var dialog = new ToDoDialog();
+            await dialog.ShowAsync();
+        }
+
+        private async void AddAppointmentClick(object sender, RoutedEventArgs e)
+        {
+            (DataContext as MainViewModel).Add(
+                new ListManagement.models.Appointment { Name = "Test", Description = "Test Description" }
+                );
+
+            var dialog = new AppointmentDialog();
+            await dialog.ShowAsync();
         }
     }
 }

@@ -13,3 +13,8 @@
 /ListManagement/Mobile.ListManagement/Mobile.ListManagement.iOS/obj
 /ListManagement/UWPListManagement/bin/x64/Debug
 /ListManagement/UWPListManagement/obj
+/ListManagement/Library.ListManagement.Standard/bin/Debug/netstandard2.0
+/ListManagement/Library.ListManagement.Standard/obj
+/ListManagement/Mobile.ListManagement/Mobile.ListManagement/bin/Debug/netstandard2.0/ref
+/ListManagement/Mobile.ListManagement/Mobile.ListManagement.Android/bin/Debug
+/ListManagement/Mobile.ListManagement/Mobile.ListManagement.iOS/bin/iPhoneSimulator/Debug
