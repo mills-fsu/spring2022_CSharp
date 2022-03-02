@@ -23,18 +23,18 @@ namespace UWPListManagement.Dialogs
     public sealed partial class ToDoDialog : ContentDialog
     {
         private ObservableCollection<Item> _toDoCollection;
-        public ToDoDialog(ObservableCollection<Item> list)
+        public ToDoDialog()
         {
             this.InitializeComponent();
-            _toDoCollection = list;
+            _toDoCollection = ItemService.Current.Items;
 
             DataContext = new ToDo();
         }
 
-        public ToDoDialog(ObservableCollection<Item> list, Item item)
+        public ToDoDialog(Item item)
         {
             this.InitializeComponent();
-            _toDoCollection = list;
+            _toDoCollection = ItemService.Current.Items;
             DataContext = item;
         }
 

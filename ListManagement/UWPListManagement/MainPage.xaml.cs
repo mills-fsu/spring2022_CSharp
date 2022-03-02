@@ -21,13 +21,13 @@ namespace UWPListManagement
 
         private async void AddToDoClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new ToDoDialog((DataContext as MainViewModel).Items);
+            var dialog = new ToDoDialog();
             await dialog.ShowAsync();
         }
 
         private async void EditToDoClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new ToDoDialog((DataContext as MainViewModel).Items, (DataContext as MainViewModel).SelectedItem);
+            var dialog = new ToDoDialog((DataContext as MainViewModel).SelectedItem);
             await dialog.ShowAsync();
         }
     }
