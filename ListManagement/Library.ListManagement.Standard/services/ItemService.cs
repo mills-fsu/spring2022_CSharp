@@ -1,4 +1,5 @@
 ﻿using Library.ListManagement.helpers;
+using Library.ListManagement.Standard.utilities;
 using ListManagement.models;
 using Newtonsoft.Json;
 using System;
@@ -67,7 +68,7 @@ namespace ListManagement.services
         {
             items = new ObservableCollection<Item>();
 
-            persistencePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\SaveData.json";
+            /*persistencePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\SaveData.json";
             if (File.Exists(persistencePath))
             {
                 try
@@ -75,14 +76,20 @@ namespace ListManagement.services
                     var state = File.ReadAllText(persistencePath);
                     if (state != null)
                     {
-                        items = JsonConvert.DeserializeObject<ObservableCollection<Item>>(state, serializerSettings) ?? new ObservableCollection<Item>();
+                        items = JsonConvert
+                        .DeserializeObject<ObservableCollection<Item>>(state, serializerSettings) ?? new ObservableCollection<Item>();
                     }
                 } catch (Exception e)
                 {
                     File.Delete(persistencePath);
                     items = new ObservableCollection<Item>();
                 }
-            }
+            }*/
+            var payload = JsonConvert
+                .DeserializeObject<List<Item>>(new WebRequestHandler()
+                    .Get("https://localhost:7020/ToDo").Result);
+
+            payload.ForEach(items.Add);
 
             listNav = new ListNavigator<Item>(FilteredItems, 2);
         }

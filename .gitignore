@@ -21,3 +21,4 @@
 /API.ListManagement/API.ListManagement/bin/Debug/net6.0
 *.suo
 /API.ListManagement/API.ListManagement/obj
+/API.ListManagement/.vs/API.ListManagement

@@ -1,4 +1,6 @@
 ﻿using ListManagement.interfaces;
+using Library.ListManagement.Standard.utilities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace ListManagement.models
 {
+    [JsonConverter(typeof(ItemJsonConverter))]
     public class Item: IItem
     {
         private string _name;

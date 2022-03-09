@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.IO;
 using UWPListManagement.Dialogs;
 using UWPListManagement.ViewModels;
 using Windows.UI.Xaml;
@@ -13,10 +15,13 @@ namespace UWPListManagement
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private string persistencePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\\SaveData.json";
         public MainPage()
         {
             this.InitializeComponent();
-            DataContext = new MainViewModel();
+
+            DataContext = new MainViewModel(persistencePath);
+
         }
 
         private async void AddToDoClick(object sender, RoutedEventArgs e)
