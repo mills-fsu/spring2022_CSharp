@@ -14,7 +14,7 @@ namespace Library.ListManagement.Standard.utilities
             {
                 return new ToDo();
             }
-            else if (jObject["startDate"] != null || jObject["StartDate"] != null)
+            else if (jObject["start"] != null || jObject["Start"] != null)
             {
                 return new Appointment();
             }

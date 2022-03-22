@@ -1,5 +1,6 @@
 using API.ListManagement.database;
 using ListManagement.models;
+using ListManagement.services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.ListManagement.Controllers
@@ -22,29 +23,33 @@ namespace API.ListManagement.Controllers
             return FakeDatabase.Items;
         }
 
-        [HttpGet("GetAnInt/{index}")]
-        public ActionResult GetAnInt(int index)
+        [HttpPost("AddOrUpdate")]
+        public ToDo AddOrUpdate([FromBody] ToDo todo)
         {
-            if(index > FakeDatabase.Ints.Count)
+            if(todo.Id <= 0)
             {
-                return BadRequest();
+                //CREATE
+                todo.Id = ItemService.Current.NextId;
+                FakeDatabase.Items.Add(todo);
+            } else
+            {
+                //UPDATE
+                var itemToUpdate = FakeDatabase.Items.FirstOrDefault(i => i.Id == todo.Id);
+                if(itemToUpdate != null) {
+                    var index = FakeDatabase.Items.IndexOf(itemToUpdate);
+                    FakeDatabase.Items.Remove(itemToUpdate);
+                    FakeDatabase.Items.Insert(index, todo);
+                } else
+                {
+                    //CREATE -- Fall-Back
+                    FakeDatabase.Items.Add(todo);
+                }
             }
-            return Ok(FakeDatabase.Ints[index]);
+
+
+            return todo;
         }
 
-        [HttpGet("AddNext")]
-        public int AddNext()
-        {
-            var max = FakeDatabase.Ints.Max() + 1;
-            FakeDatabase.Ints.Add(max);
-            return max;
-        }
 
-        [HttpPost("AddNumber")]
-        public int AddNumber([FromBody] int num)
-        {
-            FakeDatabase.Ints.Add(num);
-            return num;
-        }
     }
 }

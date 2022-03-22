@@ -19,8 +19,7 @@ namespace UWPListManagement
         public MainPage()
         {
             this.InitializeComponent();
-
-            DataContext = new MainViewModel(persistencePath);
+            DataContext = new MainViewModel();
 
         }
 
@@ -34,6 +33,11 @@ namespace UWPListManagement
         {
             var dialog = new ToDoDialog((DataContext as MainViewModel).SelectedItem);
             await dialog.ShowAsync();
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as MainViewModel).Save();
         }
     }
 }

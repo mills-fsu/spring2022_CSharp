@@ -1,5 +1,6 @@
 ﻿using ListManagement.models;
 using ListManagement.services;
+using ListManagement.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,7 +23,7 @@ namespace UWPListManagement.Dialogs
 {
     public sealed partial class ToDoDialog : ContentDialog
     {
-        private ObservableCollection<Item> _toDoCollection;
+        private ObservableCollection<ItemViewModel> _toDoCollection;
         public ToDoDialog()
         {
             this.InitializeComponent();
@@ -40,7 +41,7 @@ namespace UWPListManagement.Dialogs
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            var item = DataContext as ToDo;
+            var item = new ItemViewModel(DataContext as ToDo);
             if(_toDoCollection.Any(i => i.Id == item.Id))
             {
                 var itemToUpdate = _toDoCollection.FirstOrDefault(i => i.Id == item.Id);

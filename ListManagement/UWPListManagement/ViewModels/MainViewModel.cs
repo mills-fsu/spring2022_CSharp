@@ -1,5 +1,6 @@
 ﻿using ListManagement.models;
 using ListManagement.services;
+using ListManagement.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -20,12 +21,7 @@ namespace UWPListManagement.ViewModels
 
         }
 
-        public MainViewModel(string path)
-        {
-            Load(path);
-        }
-
-        public ObservableCollection<Item> Items
+        public ObservableCollection<ItemViewModel> Items
         {
             get
             {
@@ -62,6 +58,11 @@ namespace UWPListManagement.ViewModels
                 }
 
             }
+        }
+
+        public void Save()
+        {
+            itemService.Save();
         }
     }
 }
