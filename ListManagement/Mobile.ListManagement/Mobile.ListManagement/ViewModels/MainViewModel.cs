@@ -22,9 +22,31 @@ namespace Mobile.ListManagement.ViewModels
         public IEnumerable<Item> Items { 
             get
             {
-                return _Items.Where(i => string.IsNullOrEmpty(Query) 
-                || i.Name.ToUpper().Contains(Query.ToUpper()) 
-                || i.Description.ToUpper().Contains(Query.ToUpper()));
+                if(ShowComplete)
+                {
+                    return _Items.Where(i => string.IsNullOrEmpty(Query)
+                        || i.Name.ToUpper().Contains(Query.ToUpper())
+                        || i.Description.ToUpper().Contains(Query.ToUpper()));
+                }
+                return _Items.Where(i => !((i as ToDo)?.IsCompleted ?? false) && (string.IsNullOrEmpty(Query)
+                    || i.Name.ToUpper().Contains(Query.ToUpper())
+                    || i.Description.ToUpper().Contains(Query.ToUpper())));
+            }
+        }
+
+        private bool _ShowComplete;
+        public bool ShowComplete
+        {
+            set
+            {
+                _ShowComplete = value;
+                NotifyPropertyChanged();
+                NotifyPropertyChanged("Items");
+            }
+
+            get
+            {
+                return _ShowComplete;
             }
         }
 
@@ -50,9 +72,11 @@ namespace Mobile.ListManagement.ViewModels
             _Items.Add(new Item { Name = "NAME", Description = "DESCRIPTION" });
             _Items.Add(new Item { Name = "FIRST", Description = "1st DESCRIPTION" });
             _Items.Add(new Item { Name = "SECOND", Description = "2nd DESCRIPTION" });
-            _Items.Add(new Item { Name = "THIRD", Description = "3rd DESCRIPTION" });
-            _Items.Add(new Item { Name = "FOURTH", Description = "4th DESCRIPTION" });
-            _Items.Add(new Item { Name = "FIFTH", Description = "5th DESCRIPTION" });
+            _Items.Add(new ToDo { Name = "THIRD", Description = "3rd DESCRIPTION", IsCompleted=false });
+            _Items.Add(new ToDo { Name = "FOURTH", Description = "4th DESCRIPTION", IsCompleted=true });
+            _Items.Add(new ToDo { Name = "FIFTH", Description = "5th DESCRIPTION", IsCompleted=true });
+
+            ShowComplete = true;
         }
     }
 }

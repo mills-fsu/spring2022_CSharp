@@ -5,7 +5,21 @@
 
     <StackLayout>
 
-        <SearchBar Text="{Binding Query, Mode=TwoWay}"></SearchBar>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <SearchBar Grid.Column="0" Text="{Binding Query, Mode=TwoWay}"></SearchBar>
+            <Label Text="Complete" Grid.Column="1">
+                <Label.Margin>
+                    <Thickness Left="0" Top="13" Right="3" Bottom="0"></Thickness>
+                </Label.Margin>
+            </Label>
+            <CheckBox Grid.Column="2" IsChecked="{Binding ShowComplete, Mode=TwoWay}"></CheckBox>
+        </Grid>
+
         <ListView ItemsSource="{Binding Items}"> </ListView>
     </StackLayout>
 
