@@ -22,3 +22,6 @@
 *.suo
 /API.ListManagement/API.ListManagement/obj
 /API.ListManagement/.vs/API.ListManagement
+
+/ListManagement/Mobile.ListManagement/Mobile.ListManagement.Android/Mobile.ListManagement.Android.csproj.user
+/ListManagement/Mobile.ListManagement/Mobile.ListManagement.iOS/Mobile.ListManagement.iOS.csproj.user

@@ -1,4 +1,6 @@
 using API.ListManagement.database;
+using API.ListManagement.EC;
+using Library.ListManagement.Standard.DTO;
 using ListManagement.models;
 using ListManagement.services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,9 +20,9 @@ namespace API.ListManagement.Controllers
         }
 
         [HttpGet()]
-        public IEnumerable<Item> Get()
+        public IEnumerable<ItemDTO> Get()
         {
-            return FakeDatabase.Items;
+            return new ToDoEC().Get();
         }
 
         [HttpPost("AddOrUpdate")]

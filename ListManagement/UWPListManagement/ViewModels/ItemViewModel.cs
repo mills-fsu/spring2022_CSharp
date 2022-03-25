@@ -4,11 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace ListManagement.ViewModels
 {
     public class ItemViewModel
     {
+        public Visibility IsCompleteVisibility
+        {
+            get
+            {
+                return IsTodo ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
         public string Name
         {
             get

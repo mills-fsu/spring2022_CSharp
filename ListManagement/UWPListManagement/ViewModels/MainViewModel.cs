@@ -9,12 +9,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UWPListManagement.services;
 
 namespace UWPListManagement.ViewModels
 {
     public class MainViewModel
     {
-        private ItemService itemService = ItemService.Current;
+        private ItemServiceProxy itemService = new ItemServiceProxy();
 
         public MainViewModel()
         {
@@ -36,7 +37,7 @@ namespace UWPListManagement.ViewModels
 
         public void Add(Item item)
         {
-            itemService.Add(item);
+            //itemService.Add(item);
         }
 
         private void Load(string path)
@@ -62,7 +63,7 @@ namespace UWPListManagement.ViewModels
 
         public void Save()
         {
-            itemService.Save();
+            //itemService.Save();
         }
     }
 }

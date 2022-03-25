@@ -38,7 +38,7 @@
                                 <ColumnDefinition Width="10*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <CheckBox IsChecked="{Binding Path=IsCompleted}"></CheckBox>
+                                <CheckBox Visibility="{Binding Path=IsCompleteVisibility}" IsChecked="{Binding Path=IsCompleted}"></CheckBox>
                             </Grid>
                             <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
