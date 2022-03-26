@@ -20,7 +20,27 @@
             <CheckBox Grid.Column="2" IsChecked="{Binding ShowComplete, Mode=TwoWay}"></CheckBox>
         </Grid>
 
-        <ListView ItemsSource="{Binding Items}"> </ListView>
+        <ListView ItemsSource="{Binding Items}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout>
+                            <Label Text="{Binding Name}"></Label>
+                            <Label Text="{Binding Description}"></Label>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Text="Save" Grid.Column="0"></Button>
+            <Button Text="Load" Grid.Column="0"></Button>
+        </Grid>
     </StackLayout>
 
 </ContentPage>
