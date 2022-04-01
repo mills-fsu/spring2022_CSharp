@@ -23,7 +23,16 @@ namespace Mobile.ListManagement.Dialogs
         {
             InitializeComponent();
             _mainViewModel = mvm;
+
+            if(mvm != null && mvm.SelectedItem != null)
+            {
+                BindingContext = mvm.SelectedItem;
+            } else
+            {
+                BindingContext = new ItemViewModel(new ItemDTO(new Item()));
+            }
         }
+
 
         private void OK_Clicked(object sender, EventArgs e)
         {

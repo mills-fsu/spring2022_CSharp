@@ -20,7 +20,7 @@
             <CheckBox Grid.Column="2" IsChecked="{Binding ShowComplete, Mode=TwoWay}"></CheckBox>
         </Grid>
 
-        <ListView ItemsSource="{Binding Items}">
+        <ListView ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

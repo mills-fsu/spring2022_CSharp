@@ -19,6 +19,7 @@ namespace Mobile.ListManagement.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         private ItemServiceProxy itemServiceProxy = ItemServiceProxy.Current;
+        public ItemViewModel SelectedItem { get; set; }
         public IEnumerable<ItemViewModel> Items { 
             get
             {

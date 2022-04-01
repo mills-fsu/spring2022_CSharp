@@ -4,9 +4,8 @@
              x:Class="Mobile.ListManagement.Dialogs.ToDoDialog">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="Name:"/>
+            <Entry Text="{Binding Path=BoundItem.Name}"></Entry>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
