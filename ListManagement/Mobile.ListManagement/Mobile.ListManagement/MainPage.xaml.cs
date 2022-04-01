@@ -1,4 +1,5 @@
 ﻿using ListManagement.models;
+using Mobile.ListManagement.Dialogs;
 using Mobile.ListManagement.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,12 @@ namespace Mobile.ListManagement
             BindingContext = new MainViewModel();
 
 
+        }
+
+        private void Add_Clicked(object sender, EventArgs e)
+        {
+            var diag = new ToDoDialog(BindingContext as MainViewModel);
+            Navigation.PushModalAsync(diag);
         }
     }
 }

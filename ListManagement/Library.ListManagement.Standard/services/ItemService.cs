@@ -1,4 +1,5 @@
 ﻿using Library.ListManagement.helpers;
+using Library.ListManagement.Standard.DTO;
 using Library.ListManagement.Standard.utilities;
 using ListManagement.models;
 using Newtonsoft.Json;
@@ -14,8 +15,8 @@ namespace ListManagement.services
 {
     public class ItemService
     {
-        private ObservableCollection<Item> items;
-        private ListNavigator<Item> listNav;
+        private ObservableCollection<ItemDTO> items;
+        private ListNavigator<ItemDTO> listNav;
         private string persistencePath;
         private JsonSerializerSettings serializerSettings
             = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
@@ -23,7 +24,7 @@ namespace ListManagement.services
         static private ItemService instance;
 
         public bool ShowComplete { get; set; }
-        public ObservableCollection<Item> Items {
+        public ObservableCollection<ItemDTO> Items {
             get {
                 return items;
             }
@@ -31,12 +32,12 @@ namespace ListManagement.services
 
         public string Query { get; set; }
 
-        public IEnumerable<Item> FilteredItems
+        public IEnumerable<ItemDTO> FilteredItems
         {
             get
             {
                 var incompleteItems = Items.Where(i =>
-                (!ShowComplete && !((i as ToDo)?.IsCompleted ?? true)) //incomplete only
+                (!ShowComplete && !((i as ToDoDTO)?.IsCompleted ?? true)) //incomplete only
                 || ShowComplete);
                 //show complete (all)
 
@@ -46,7 +47,7 @@ namespace ListManagement.services
                 //i is any item and its name contains the query
                 || (i?.Description?.ToUpper()?.Contains(Query.ToUpper()) ?? false)                                        
                 //or i is any item and its description contains the query
-                ||((i as Appointment)?.Attendees?.Select(t => t.ToUpper())?.Contains(Query.ToUpper()) ?? false));         
+                ||((i as AppointmentDTO)?.Attendees?.Select(t => t.ToUpper())?.Contains(Query.ToUpper()) ?? false));         
                 //or i is an appointment and has the query in the attendees list
                 return searchResults;
             }
@@ -66,7 +67,7 @@ namespace ListManagement.services
 
         private ItemService()
         {
-            items = new ObservableCollection<Item>();
+            items = new ObservableCollection<ItemDTO>();
             persistencePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\SaveData.json";
             try
             {
@@ -80,12 +81,12 @@ namespace ListManagement.services
         private void LoadFromServer()
         {
             var payload = JsonConvert
-            .DeserializeObject<List<Item>>(new WebRequestHandler()
+            .DeserializeObject<List<ItemDTO>>(new WebRequestHandler()
             .Get("http://localhost:7020/ToDo").Result);
 
             payload.ToList().ForEach(items.Add);
 
-            listNav = new ListNavigator<Item>(FilteredItems, 2);
+            listNav = new ListNavigator<ItemDTO>(FilteredItems, 2);
         }
 
         private void LoadFromDisk()
@@ -99,18 +100,18 @@ namespace ListManagement.services
                     if (state != null)
                     {
                         items = JsonConvert
-                        .DeserializeObject<ObservableCollection<Item>>(state, serializerSettings) ?? new ObservableCollection<Item>();
+                        .DeserializeObject<ObservableCollection<ItemDTO>>(state, serializerSettings) ?? new ObservableCollection<ItemDTO>();
                     }
                 }
                 catch (Exception e)
                 {
                     File.Delete(persistencePath);
-                    items = new ObservableCollection<Item>();
+                    items = new ObservableCollection<ItemDTO>();
                 }
             }
         }
 
-        public void Add(Item i)
+        public void Add(ItemDTO i)
         {
             if (i.Id <= 0)
             {
@@ -145,7 +146,7 @@ namespace ListManagement.services
             }
         }
 
-        public Dictionary<object, Item> GetPage()
+        public Dictionary<object, ItemDTO> GetPage()
         {
             var page = listNav.GetCurrentPage();
             if (listNav.HasNextPage)
@@ -158,12 +159,12 @@ namespace ListManagement.services
             return page;
         }
 
-        public Dictionary<object, Item> NextPage()
+        public Dictionary<object, ItemDTO> NextPage()
         {
             return listNav.GoForward();
         }
 
-        public Dictionary<object, Item> PreviousPage()
+        public Dictionary<object, ItemDTO> PreviousPage()
         {
             return listNav.GoBackward();
         }

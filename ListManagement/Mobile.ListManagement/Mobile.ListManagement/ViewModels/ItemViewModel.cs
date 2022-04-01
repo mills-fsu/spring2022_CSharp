@@ -2,22 +2,19 @@
 using ListManagement.models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
 
-namespace ListManagement.ViewModels
+namespace Mobile.ListManagement.ViewModels
 {
     public class ItemViewModel
     {
-        public Visibility IsCompleteVisibility
-        {
-            get
-            {
-                return IsTodo ? Visibility.Visible : Visibility.Collapsed;
-            }
-        }
+        //public Visibility IsCompleteVisibility
+        //{
+        //    get
+        //    {
+        //        return IsTodo ? Visibility.Visible : Visibility.Collapsed;
+        //    }
+        //}
         public string Name
         {
             get
@@ -56,10 +53,11 @@ namespace ListManagement.ViewModels
                 return BoundItem.Id;
             }
         }
-        public bool IsCompleted {
+        public bool IsCompleted
+        {
             get
             {
-                if(IsTodo)
+                if (IsTodo)
                 {
                     return BoundToDo.IsCompleted;
                 }
@@ -69,17 +67,19 @@ namespace ListManagement.ViewModels
 
             set
             {
-                if(IsTodo)
+                if (IsTodo)
                 {
                     BoundToDo.IsCompleted = value;
                 }
             }
         }
 
-        public bool IsTodo { 
-            get { 
+        public bool IsTodo
+        {
+            get
+            {
                 return BoundToDo != null;
-            } 
+            }
         }
 
         public ToDoDTO BoundToDo { get; set; }
@@ -88,16 +88,22 @@ namespace ListManagement.ViewModels
 
         public ItemViewModel(ItemDTO item)
         {
-            if(item is AppointmentDTO)
+            if (item is AppointmentDTO)
             {
                 BoundAppointment = item as AppointmentDTO;
                 IsCompleted = false;
                 BoundToDo = null;
-            } else
+            }
+            else if(item is ToDoDTO)
             {
                 BoundToDo = item as ToDoDTO;
                 BoundAppointment = null;
                 IsCompleted = (item as ToDoDTO).IsCompleted;
+            } else
+            {
+                BoundToDo = item as ToDoDTO;
+                BoundAppointment = null;
+
             }
         }
     }

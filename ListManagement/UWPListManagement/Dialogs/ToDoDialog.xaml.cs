@@ -1,4 +1,5 @@
-﻿using ListManagement.models;
+﻿using Library.ListManagement.Standard.DTO;
+using ListManagement.models;
 using ListManagement.services;
 using ListManagement.ViewModels;
 using System;
@@ -41,7 +42,7 @@ namespace UWPListManagement.Dialogs
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            var item = new ItemViewModel(DataContext as ToDo);
+            var item = new ItemViewModel(DataContext as ToDoDTO);
             if(_toDoCollection.Any(i => i.Id == item.Id))
             {
                 var itemToUpdate = _toDoCollection.FirstOrDefault(i => i.Id == item.Id);
@@ -50,7 +51,7 @@ namespace UWPListManagement.Dialogs
                 _toDoCollection.Insert(index, item);
             } else
             {
-                ItemService.Current.Add(DataContext as ToDo);
+                ItemService.Current.Add(DataContext as ToDoDTO);
             }
 
         }

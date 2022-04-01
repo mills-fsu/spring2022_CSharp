@@ -1,4 +1,5 @@
 ﻿using ListManagement.models;
+using Mobile.ListManagement.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,26 +10,25 @@ using System.Text;
 
 namespace Mobile.ListManagement.ViewModels
 {
-    internal class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Item> _Items;
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        public IEnumerable<Item> Items { 
+        private ItemServiceProxy itemServiceProxy = ItemServiceProxy.Current;
+        public IEnumerable<ItemViewModel> Items { 
             get
             {
                 if(ShowComplete)
                 {
-                    return _Items.Where(i => string.IsNullOrEmpty(Query)
+                    return itemServiceProxy.Items.Where(i => string.IsNullOrEmpty(Query)
                         || i.Name.ToUpper().Contains(Query.ToUpper())
                         || i.Description.ToUpper().Contains(Query.ToUpper()));
                 }
-                return _Items.Where(i => !((i as ToDo)?.IsCompleted ?? false) && (string.IsNullOrEmpty(Query)
+                return itemServiceProxy.Items.Where(i => !(i.BoundToDo?.IsCompleted ?? false) && (string.IsNullOrEmpty(Query)
                     || i.Name.ToUpper().Contains(Query.ToUpper())
                     || i.Description.ToUpper().Contains(Query.ToUpper())));
             }
@@ -68,15 +68,13 @@ namespace Mobile.ListManagement.ViewModels
 
         public MainViewModel()
         {
-            _Items = new ObservableCollection<Item>();
-            _Items.Add(new Item { Name = "NAME", Description = "DESCRIPTION" });
-            _Items.Add(new Item { Name = "FIRST", Description = "1st DESCRIPTION" });
-            _Items.Add(new Item { Name = "SECOND", Description = "2nd DESCRIPTION" });
-            _Items.Add(new ToDo { Name = "THIRD", Description = "3rd DESCRIPTION", IsCompleted=false });
-            _Items.Add(new ToDo { Name = "FOURTH", Description = "4th DESCRIPTION", IsCompleted=true });
-            _Items.Add(new ToDo { Name = "FIFTH", Description = "5th DESCRIPTION", IsCompleted=true });
-
+            
             ShowComplete = true;
+        }
+
+        public void Refresh()
+        {
+            NotifyPropertyChanged("Items");
         }
     }
 }

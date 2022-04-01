@@ -18,4 +18,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Library.ListManagement.Standard\Library.ListManagement.Standard.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Dialogs\ToDoDialog.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>
