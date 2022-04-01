@@ -27,5 +27,10 @@ namespace UWPListManagement.services
                     (itemService.Items.Select(i => new ItemViewModel(i)));
             }
         }
+
+        public void Add(ItemViewModel item)
+        {
+            itemService.Add(item.BoundItem);
+        }
     }
 }
