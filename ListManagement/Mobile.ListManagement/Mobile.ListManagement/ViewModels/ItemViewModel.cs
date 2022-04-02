@@ -82,6 +82,14 @@ namespace Mobile.ListManagement.ViewModels
             }
         }
 
+        public string DeadlineDisplay
+        {
+            get
+            {
+                return BoundToDo?.Deadline.ToShortDateString() ?? string.Empty;
+            }
+        }
+
         public ToDoDTO BoundToDo { get; set; }
 
         public AppointmentDTO BoundAppointment { get; set; }

@@ -4,8 +4,18 @@
              x:Class="Mobile.ListManagement.Dialogs.ToDoDialog">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Name:"/>
-            <Entry Text="{Binding Path=BoundItem.Name}"></Entry>
+            <Grid>
+                <Label Text="Name:"/>
+                <Entry Text="{Binding Path=BoundItem.Name}"></Entry>
+            </Grid>
+            <Grid>
+                <Label Text="Description:"/>
+                <Entry Text="{Binding Path=BoundItem.Description}"></Entry>
+            </Grid>
+            <Grid>
+                <Label Text="Deadline:"/>
+                <DatePicker IsVisible="{Binding IsTodo}" Date="{Binding Path=BoundToDo.Deadline}"></DatePicker>
+            </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>

@@ -19,17 +19,17 @@ namespace Mobile.ListManagement.Dialogs
     {
         private MainViewModel _mainViewModel;
         private ItemServiceProxy itemServiceProxy = ItemServiceProxy.Current;
-        public ToDoDialog(MainViewModel mvm)
+        public ToDoDialog(MainViewModel mvm, bool edit = false)
         {
             InitializeComponent();
             _mainViewModel = mvm;
 
-            if(mvm != null && mvm.SelectedItem != null)
+            if(edit)
             {
                 BindingContext = mvm.SelectedItem;
             } else
             {
-                BindingContext = new ItemViewModel(new ItemDTO(new Item()));
+                BindingContext = new ItemViewModel(new ToDoDTO(new Item()));
             }
         }
 
@@ -37,7 +37,7 @@ namespace Mobile.ListManagement.Dialogs
         private void OK_Clicked(object sender, EventArgs e)
         {
             //Do some stuff
-            itemServiceProxy.Add(new ItemViewModel(new ToDoDTO(new ToDo {Name = "TEST", Description = "TEST DESC" })));
+            itemServiceProxy.Add(BindingContext as ItemViewModel);
             _mainViewModel.Refresh();
             Navigation.PopModalAsync();
         }

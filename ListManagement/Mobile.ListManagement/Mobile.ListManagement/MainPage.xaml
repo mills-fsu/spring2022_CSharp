@@ -25,8 +25,17 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout>
-                            <Label Text="{Binding Name}"></Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding Name}"></Label>
+                                <Label Grid.Column="1" IsVisible="{Binding IsToDo}" Text="{Binding DeadlineDisplay}"></Label>
+                            </Grid>
+
                             <Label Text="{Binding Description}"></Label>
+                            
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
@@ -37,11 +46,17 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Text="Add" Grid.Column="0" Clicked="Add_Clicked"></Button>
+            <Button Text="Edit" Grid.Column="1" Clicked="Edit_Clicked"></Button>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Text="Save" Grid.Column="0"></Button>
             <Button Text="Load" Grid.Column="1"></Button>
-            <Button Text="Add" Grid.Column="2" Clicked="Add_Clicked"></Button>
         </Grid>
     </StackLayout>
 

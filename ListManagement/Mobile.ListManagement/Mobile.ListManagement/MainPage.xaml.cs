@@ -28,5 +28,11 @@ namespace Mobile.ListManagement
             var diag = new ToDoDialog(BindingContext as MainViewModel);
             Navigation.PushModalAsync(diag);
         }
+
+        private void Edit_Clicked(object sender, EventArgs e)
+        {
+            var diag = new ToDoDialog(BindingContext as MainViewModel, true);
+            Navigation.PushModalAsync(diag);
+        }
     }
 }
