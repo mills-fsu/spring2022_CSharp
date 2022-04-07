@@ -13,5 +13,10 @@ namespace Library.ListManagement.Standard.DTO
         {
 
         }
+
+        public ToDoDTO()
+        {
+
+        }
     }
 }

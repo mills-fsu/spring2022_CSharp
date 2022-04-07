@@ -29,6 +29,11 @@ namespace Library.ListManagement.Standard.DTO
             return $"{Id} {Name} {Description}";
         }
 
+        public ItemDTO()
+        {
+
+        }
+
         public ItemDTO(Item i)
         {
             Name = i.Name;

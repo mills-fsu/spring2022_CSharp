@@ -55,7 +55,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Text="Save" Grid.Column="0"></Button>
+            <Button Text="Save" Grid.Column="0" Clicked="Save_Clicked"></Button>
             <Button Text="Load" Grid.Column="1"></Button>
         </Grid>
     </StackLayout>

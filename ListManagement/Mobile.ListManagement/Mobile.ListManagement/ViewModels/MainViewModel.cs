@@ -51,6 +51,11 @@ namespace Mobile.ListManagement.ViewModels
             }
         }
 
+        public void Save()
+        {
+            itemServiceProxy.Save();
+        }
+
         private string _Query;
         public string Query
         {

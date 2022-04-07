@@ -1,9 +1,11 @@
 ﻿using Library.ListManagement.Standard.DTO;
 using ListManagement.models;
+using ListManagement.services;
 using Mobile.ListManagement.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 
 namespace Mobile.ListManagement.Services
@@ -12,8 +14,13 @@ namespace Mobile.ListManagement.Services
     {
         public ObservableCollection<ItemViewModel> Items
         {
-            get; private set;
+            get
+            {
+                return new ObservableCollection<ItemViewModel>(itemService.Items.Select(i => new ItemViewModel(i)));
+            }
         }
+
+        private static ItemService itemService = ItemService.Current;
         private static ItemServiceProxy itemServiceProxy;
         public static ItemServiceProxy Current
         {
@@ -28,15 +35,17 @@ namespace Mobile.ListManagement.Services
         }
         private ItemServiceProxy()
         {
-            Items = new ObservableCollection<ItemViewModel>();
-            Items.Add(new ItemViewModel(new ToDoDTO(new ToDo { Name = "NAME", Description = "DESCRIPTION" })));
-            Items.Add(new ItemViewModel(new ToDoDTO (new ToDo {Name = "FIRST", Description = "1st DESCRIPTION" })));
-            Items.Add(new ItemViewModel(new ToDoDTO (new ToDo{ Name = "SECOND", Description = "2nd DESCRIPTION" })));
+
         }
 
         public void Add(ItemViewModel itemViewModel)
         {
-            Items.Add(itemViewModel);
+            itemService.Add(itemViewModel.BoundItem);
+        }
+
+        public void Save()
+        {
+            itemService.Save();
         }
     }
 }

@@ -16,5 +16,10 @@ namespace Library.ListManagement.Standard.DTO
         {
 
         }
+
+        public AppointmentDTO()
+        {
+
+        }
     }
 }

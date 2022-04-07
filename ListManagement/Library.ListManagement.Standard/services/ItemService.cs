@@ -135,15 +135,17 @@ namespace ListManagement.services
             }
             File.WriteAllText(persistencePath, listJson);
 
-            //post request to add each of these items to the list
-            foreach(var i in Items)
-            {
-                if(i is ToDo)
-                {
-                    JsonConvert.DeserializeObject<List<Item>>(
-                    new WebRequestHandler().Post("http://localhost:7020/ToDo/AddOrUpdate", i).Result);
-                }
-            }
+            //post request to add each of these items to the list -- COMMENTING OUT FOR PROGRAMMING ASSIGNMENT 3
+            //foreach(var i in Items)
+            //{
+            //    if(i is ToDo)
+            //    {
+            //        JsonConvert.DeserializeObject<List<Item>>(
+            //        new WebRequestHandler().Post("http://localhost:7020/ToDo/AddOrUpdate", i).Result);
+            //    }
+            //}
+
+
         }
 
         public Dictionary<object, ItemDTO> GetPage()
