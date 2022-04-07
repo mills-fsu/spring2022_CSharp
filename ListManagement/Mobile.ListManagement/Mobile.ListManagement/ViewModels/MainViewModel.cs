@@ -25,11 +25,11 @@ namespace Mobile.ListManagement.ViewModels
             {
                 if(ShowComplete)
                 {
-                    return itemServiceProxy.Items.Where(i => string.IsNullOrEmpty(Query)
+                    return itemServiceProxy.Items.Where(i => ShowComplete && (string.IsNullOrEmpty(Query)
                         || i.Name.ToUpper().Contains(Query.ToUpper())
-                        || i.Description.ToUpper().Contains(Query.ToUpper()));
+                        || i.Description.ToUpper().Contains(Query.ToUpper())));
                 }
-                return itemServiceProxy.Items.Where(i => !(i.BoundToDo?.IsCompleted ?? false) && (string.IsNullOrEmpty(Query)
+                return itemServiceProxy.Items.Where(i => !ShowComplete && !(i.BoundToDo?.IsCompleted ?? false) && (string.IsNullOrEmpty(Query)
                     || i.Name.ToUpper().Contains(Query.ToUpper())
                     || i.Description.ToUpper().Contains(Query.ToUpper())));
             }
@@ -76,6 +76,15 @@ namespace Mobile.ListManagement.ViewModels
         public void Refresh()
         {
             NotifyPropertyChanged("Items");
+        }
+
+        public void ClearSelection()
+        {
+            if(SelectedItem != null)
+            {
+                SelectedItem = null;
+                NotifyPropertyChanged("SelectedItem");
+            }
         }
     }
 }

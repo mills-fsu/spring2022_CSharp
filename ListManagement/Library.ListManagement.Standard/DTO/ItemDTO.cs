@@ -20,6 +20,7 @@ namespace Library.ListManagement.Standard.DTO
             }
 
         }
+
         public string Description { get; set; }
 
         public int Id { get; set; }

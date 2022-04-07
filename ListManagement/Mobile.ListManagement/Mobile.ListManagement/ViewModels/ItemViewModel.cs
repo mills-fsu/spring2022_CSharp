@@ -74,11 +74,26 @@ namespace Mobile.ListManagement.ViewModels
             }
         }
 
+        private bool isTodo;
         public bool IsTodo
         {
             get
             {
                 return BoundToDo != null;
+            }
+            set
+            {
+                isTodo = value;
+                if(isTodo)
+                {
+                    BoundToDo = new ToDoDTO(new ToDo());
+                    BoundAppointment = null;
+                } else
+                {
+                    BoundToDo = null;
+                    BoundAppointment = new AppointmentDTO(new Appointment());
+                }
+
             }
         }
 

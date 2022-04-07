@@ -5,6 +5,9 @@
     <ContentPage.Content>
         <StackLayout>
             <Grid>
+                <CheckBox IsChecked="{Binding IsTodo, Mode=TwoWay}"></CheckBox>
+            </Grid>
+            <Grid>
                 <Label Text="Name:"/>
                 <Entry Text="{Binding Path=BoundItem.Name}"></Entry>
             </Grid>
