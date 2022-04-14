@@ -11,7 +11,12 @@ namespace Library.ListManagement.Standard.DTO
         public bool IsCompleted { get; set; }
         public ToDoDTO(Item i):base(i)
         {
-
+            var t = i as ToDo;
+            if(t != null)
+            {
+                Deadline = t.Deadline;
+                IsCompleted = t.IsCompleted;
+            }
         }
 
         public ToDoDTO()

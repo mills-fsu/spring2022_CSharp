@@ -63,7 +63,7 @@
             </Grid.ColumnDefinitions>
             <Button Content="Add ToDo" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="AddToDoClick"></Button>
             <Button Content="Edit ToDo" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="EditToDoClick"></Button>
-            <Button Content="Delete" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
+            <Button Content="Delete" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="DeleteClick"></Button>
             <Button Content="Button 4" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Button>
         </Grid>
     </Grid>

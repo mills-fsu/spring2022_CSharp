@@ -42,15 +42,23 @@ namespace UWPListManagement.ViewModels
             get; set;
         }
 
-        public void Add(ItemViewModel item)
+        public async void Add(ItemViewModel item)
         {
-            itemService.Add(item);
+            await itemService.Add(item);
+
+            Refresh();
         }
 
         public void Refresh()
         {
             NotifyPropertyChanged("Items");
         }
+
+        public void Delete()
+        {
+
+        }
+
         private void Load(string path)
         {
             MainViewModel mvm;

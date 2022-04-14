@@ -26,32 +26,16 @@ namespace API.ListManagement.Controllers
         }
 
         [HttpPost("AddOrUpdate")]
-        public ToDo AddOrUpdate([FromBody] ToDo todo)
+        public ToDoDTO AddOrUpdate([FromBody] ToDoDTO todo)
         {
-            if(todo.Id <= 0)
-            {
-                //CREATE
-                todo.Id = ItemService.Current.NextId;
-                FakeDatabase.Items.Add(todo);
-            } else
-            {
-                //UPDATE
-                var itemToUpdate = FakeDatabase.Items.FirstOrDefault(i => i.Id == todo.Id);
-                if(itemToUpdate != null) {
-                    var index = FakeDatabase.Items.IndexOf(itemToUpdate);
-                    FakeDatabase.Items.Remove(itemToUpdate);
-                    FakeDatabase.Items.Insert(index, todo);
-                } else
-                {
-                    //CREATE -- Fall-Back
-                    FakeDatabase.Items.Add(todo);
-                }
-            }
 
-
-            return todo;
+            return new ToDoEC().AddOrUpdate(todo);
         }
 
-
+        [HttpPost("Delete")]
+        public ToDoDTO Delete([FromBody] DeleteItemDTO deleteItemDTO)
+        {
+            return new ToDoEC().Delete(deleteItemDTO.IdToDelete);
+        }
     }
 }

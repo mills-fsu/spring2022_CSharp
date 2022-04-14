@@ -97,7 +97,7 @@ namespace ListManagement.ViewModels
             {
                 BoundToDo = item as ToDoDTO;
                 BoundAppointment = null;
-                IsCompleted = (item as ToDoDTO).IsCompleted;
+                IsCompleted = (item as ToDoDTO)?.IsCompleted ?? false;
             }
         }
     }

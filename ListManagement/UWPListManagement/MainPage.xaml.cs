@@ -35,6 +35,11 @@ namespace UWPListManagement
             await dialog.ShowAsync();
         }
 
+        private async void DeleteClick(object sender, RoutedEventArgs e)
+        {
+            (DataContext as MainViewModel).Delete();
+        }
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             (DataContext as MainViewModel).Save();

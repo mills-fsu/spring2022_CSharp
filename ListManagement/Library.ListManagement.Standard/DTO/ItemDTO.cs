@@ -1,10 +1,13 @@
-﻿using ListManagement.models;
+﻿using Library.ListManagement.Standard.utilities;
+using ListManagement.models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Library.ListManagement.Standard.DTO
 {
+    [JsonConverter(typeof(ItemJsonConverter))]
     public class ItemDTO
     {
         private string _name;

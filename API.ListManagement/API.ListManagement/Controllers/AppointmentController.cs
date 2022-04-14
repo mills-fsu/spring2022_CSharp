@@ -1,4 +1,6 @@
 ﻿using API.ListManagement.database;
+using API.ListManagement.EC;
+using Library.ListManagement.Standard.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.ListManagement.Controllers
@@ -15,9 +17,9 @@ namespace API.ListManagement.Controllers
         }
 
         [HttpGet()]
-        public double Get()
+        public IEnumerable<AppointmentDTO> Get()
         {
-            return FakeDatabase.Doubles[0];
+            return new AppointmentEC().Get();
         }
     }
 }

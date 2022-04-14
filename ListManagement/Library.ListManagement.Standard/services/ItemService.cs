@@ -26,6 +26,12 @@ namespace ListManagement.services
         public bool ShowComplete { get; set; }
         public ObservableCollection<ItemDTO> Items {
             get {
+                var payload = JsonConvert
+                    .DeserializeObject<List<ItemDTO>>(new WebRequestHandler()
+                    .Get("http://localhost:7020/Item").Result);
+                items.Clear();
+                payload.ForEach(items.Add);
+
                 return items;
             }
         }
@@ -82,7 +88,7 @@ namespace ListManagement.services
         {
             var payload = JsonConvert
             .DeserializeObject<List<ItemDTO>>(new WebRequestHandler()
-            .Get("http://localhost:7020/ToDo").Result);
+            .Get("http://localhost:7020/Item").Result);
 
             payload.ToList().ForEach(items.Add);
 
@@ -111,18 +117,18 @@ namespace ListManagement.services
             }
         }
 
-        public void Add(ItemDTO i)
+        public async Task<ToDoDTO> Add(ItemDTO i)
         {
-            if (i.Id <= 0)
-            {
-                i.Id = NextId;
-            }
-            items.Add(i);
+            var toDoStr = await new WebRequestHandler().Post("http://localhost:7020/ToDo/AddOrUpdate", i);
+            return JsonConvert.DeserializeObject<ToDoDTO>(toDoStr);
+
+
         }
 
-        public void Remove(Item i)
+        public async Task<ToDoDTO> Remove(int id)
         {
-            //items.Remove(i);
+            var deletedToDoStr = await new WebRequestHandler().Post("http://localhost:7020/ToDo/Delete", new DeleteItemDTO { IdToDelete = id});
+            return JsonConvert.DeserializeObject<ToDoDTO>(deletedToDoStr);
         }
 
         public void Save()

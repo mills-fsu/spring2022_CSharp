@@ -44,18 +44,21 @@ namespace UWPListManagement.Dialogs
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             var item = new ItemViewModel(DataContext as ToDoDTO);
-            var todoList = _mvm.Items;
-            if(todoList.Any(i => i.Id == item.Id))
-            {
-                var itemToUpdate = todoList.FirstOrDefault(i => i.Id == item.Id);
-                var index = todoList.IndexOf(itemToUpdate);
-                todoList.RemoveAt(index);
-                todoList.Insert(index, item);
-            } else
-            {
-                _mvm.Add(item);
-            }
-            _mvm.Refresh();
+
+            _mvm.Add(item);
+
+            //var todoList = _mvm.Items;
+            //if(todoList.Any(i => i.Id == item.Id))
+            //{
+            //    var itemToUpdate = todoList.FirstOrDefault(i => i.Id == item.Id);
+            //    var index = todoList.IndexOf(itemToUpdate);
+            //    todoList.RemoveAt(index);
+            //    todoList.Insert(index, item);
+            //} else
+            //{
+            //    _mvm.Add(item);
+            //}
+            //_mvm.Refresh();
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

@@ -14,7 +14,14 @@ namespace Library.ListManagement.Standard.DTO
 
         public AppointmentDTO(Item i) : base(i)
         {
+            var a = i as Appointment;
+            if(a != null)
+            {
+                Start = a.Start;
+                End = a.End;
 
+                Attendees = a.Attendees;
+            }
         }
 
         public AppointmentDTO()

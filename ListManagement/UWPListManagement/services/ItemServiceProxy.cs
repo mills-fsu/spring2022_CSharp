@@ -1,4 +1,5 @@
-﻿using ListManagement.services;
+﻿using Library.ListManagement.Standard.DTO;
+using ListManagement.services;
 using ListManagement.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -28,9 +29,14 @@ namespace UWPListManagement.services
             }
         }
 
-        public void Add(ItemViewModel item)
+        public async Task<ToDoDTO> Add(ItemViewModel item)
         {
-            itemService.Add(item.BoundItem);
+            return await itemService.Add(item.BoundItem);
+        }
+
+        public async Task<ToDoDTO> Delete(int id)
+        {
+            return await itemService.Remove(id);
         }
     }
 }
