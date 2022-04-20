@@ -1,4 +1,5 @@
-﻿using API.ListManagement.database;
+﻿using Api.ToDoApplication.Persistence;
+using API.ListManagement.database;
 using Library.ListManagement.Standard.DTO;
 using ListManagement.models;
 using ListManagement.services;
@@ -9,7 +10,8 @@ namespace API.ListManagement.EC
     {
         public IEnumerable<ToDoDTO> Get()
         {
-            return FakeDatabase.ToDos.Select(t => new ToDoDTO(t));
+            //return FakeDatabase.ToDos.Select(t => new ToDoDTO(t));
+            return Filebase.Current.ToDos.Select(t => new ToDoDTO(t));
         }
 
         public ToDoDTO AddOrUpdate(ToDoDTO todo)
@@ -18,7 +20,8 @@ namespace API.ListManagement.EC
             {
                 //CREATE
                 todo.Id = ItemService.Current.NextId;
-                FakeDatabase.ToDos.Add(new ToDo(todo));
+                //FakeDatabase.ToDos.Add(new ToDo(todo));
+                Filebase.Current.AddOrUpdate(new ToDo(todo));
             }
             else
             {
